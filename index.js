@@ -33,6 +33,7 @@ async function run() {
     // add product into database
     app.post('/postToy', async(req, res)=>{
       const body = req.body;
+      body.createdAt = new Date();
       const result = await toyCollection.insertOne(body);
       console.log(body);
       res.send(result)
@@ -63,11 +64,13 @@ async function run() {
       console.log(req.params.text );
       if(req.params.text == "sportsCar" || req.params.text == "truck" || req.params.text == "regularCar"){
 
-        const result = await toyCollection.find({subCategory: req.params.text}).toArray();
+        const result = await toyCollection.find({subCategory: req.params.text})
+        .sort({ createdAt: -1})
+        .toArray();
         console.log(result)
         return res.send(result);
       }
-      const result = await toyCollection.find({}).toArray();
+      const result = await toyCollection.find({}).sort({ createdAt: -1}).toArray();
       res.send(result);
 
     })
