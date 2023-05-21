@@ -96,13 +96,23 @@ async function run() {
     })
 
     // edit data  or update data
-    app.patch('/update/:id', async(req, res)=>{
+    app.put('/update/:id', async(req, res)=>{
       const id = req.params.id;
       const body = req.body;
       const filter = {_id: new ObjectId(id)};
       const updateDoc = {
         $set:{
+          
+          category: body.category,
+          subCategory: body.subCategory,
           toyName: body.toyName,
+          photoUrl: body.photoUrl,
+          sellerName: body.sellerName,
+          userEmail: body.userEmail,
+          price: body.price,
+          rating: body.rating,
+          availableQuantity: body.availableQuantity,
+          description: body.description,
         }
       };
       const result = await toyCollection.updateOne(filter, updateDoc);
@@ -140,6 +150,3 @@ app.get('/', (req, res)=>{
 app.listen(port,()=>{
     console.log(`toy management is running on port: ${port}`);
 })
-
-// Export the Express Api
-module.exports = app;
