@@ -140,3 +140,6 @@ app.get('/', (req, res)=>{
 app.listen(port,()=>{
     console.log(`toy management is running on port: ${port}`);
 })
+
+// Export the Express Api
+module.exports = app;
